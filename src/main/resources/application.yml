@@ -8,13 +8,25 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 spring:
+  application:
+    name: gateway-service
   cloud:
     gateway:
       routes:
-        - id:
-          uri:
+        - id: user-service
+          uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/**
+            - Method=GET, POST
+        - id: collecting-service
+          uri: lb://COLLECTING-SERVICE
+          predicates:
+            - Path=/collecting-service/**
+            - Method=GET, POST
+        - id: inspection-service
+          uri: lb://INSPECTION-SERVICE
+          predicates:
+            - Path=/inspection-service/**
             - Method=GET, POST
 
 management:
