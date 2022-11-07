@@ -28,6 +28,11 @@ spring:
           predicates:
             - Path=/inspection-service/**
             - Method=GET, POST
+        - id: prescribe-service
+          uri: lb://PRESCRIBE-SERVICE
+          predicates:
+            - Path=/prescribe-service/**
+            - Method=GET, POST
 
 management:
   endpoints:
