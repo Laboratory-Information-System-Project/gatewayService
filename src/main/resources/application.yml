@@ -10,6 +10,10 @@ eureka:
 spring:
   application:
     name: gateway-service
+  devtools:
+    restart:
+      enabled: true
+      quiet-period: 400ms
   cloud:
     gateway:
       routes:
@@ -33,23 +37,24 @@ spring:
           predicates:
             - Path=/prescribe-service/**
             - Method=GET, POST
+          filters:
+            - name: CustomFilter
 
-#cloud:
-#  gateway:
-#    default-filters:
-#      - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
-#    globalcors:
-#      cors-configurations:
-#        '[/**]':
-#          allowedOrigins: 'http://localhost:3000'
-#          allow-credentials: true
-#          allowedHeaders: '*'
-#          allowedMethods:
-#            - PUT
-#            - GET
-#            - POST
-#            - DELETE
-#            - OPTIONS
+#      default-filters:
+#        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+#      globalcors:
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins: 'http://localhost:3000/**'
+#            allow-credentials: true
+#            allowedHeaders: '*'
+#            allowedMethods:
+#              - PUT
+#              - GET
+#              - POST
+#              - DELETE
+#              - OPTIONS
+#        add-to-simple-url-handler-mapping: true
 
 management:
   endpoints:
