@@ -21,24 +21,29 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/**
-            - Method=GET, POST
+            - Method=GET, POST, PUT
         - id: collecting-service
           uri: lb://COLLECTING-SERVICE
           predicates:
             - Path=/collecting-service/**
-            - Method=GET, POST
+            - Method=GET, POST, PUT
         - id: inspection-service
           uri: lb://INSPECTION-SERVICE
           predicates:
             - Path=/inspection-service/**
-            - Method=GET, POST
+            - Method=GET, POST, PUT
         - id: prescribe-service
           uri: lb://PRESCRIBE-SERVICE
           predicates:
             - Path=/prescribe-service/**
-            - Method=GET, POST
+            - Method=GET, POST, PUT
           filters:
             - name: CustomFilter
+        - id: data-service
+          uri: lb://DATA-SERVICE
+          predicates:
+            - Path=/data-service/**
+            - Method=GET, POST, PUT
 
 #      default-filters:
 #        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials

@@ -18,7 +18,6 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
         super(Config.class);
     }
 
-
     @Override
     public GatewayFilter apply(Config config) {
         // Custom pre filter
