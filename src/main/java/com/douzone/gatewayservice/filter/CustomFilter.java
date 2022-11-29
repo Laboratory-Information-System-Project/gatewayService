@@ -1,9 +1,11 @@
 package com.douzone.gatewayservice.filter;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -14,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Order(value = Integer.MIN_VALUE)
 public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Config> {
-    public CustomFilter(){
+    public CustomFilter() {
         super(Config.class);
     }
 
@@ -22,6 +24,7 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
     public GatewayFilter apply(Config config) {
         // Custom pre filter
         log.info("test");
+
         return ((exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             ServerHttpResponse response = exchange.getResponse();

@@ -21,12 +21,12 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/**
-            - Method=GET, POST, PUT
+            - Method=GET, POST
         - id: collecting-service
           uri: lb://COLLECTING-SERVICE
           predicates:
             - Path=/collecting-service/**
-            - Method=GET, POST, PUT
+            - Method=GET, POST
         - id: inspection-service
           uri: lb://INSPECTION-SERVICE
           predicates:
@@ -36,30 +36,29 @@ spring:
           uri: lb://PRESCRIBE-SERVICE
           predicates:
             - Path=/prescribe-service/**
-            - Method=GET, POST, PUT
+            - Method=GET, POST
           filters:
             - name: CustomFilter
         - id: data-service
           uri: lb://DATA-SERVICE
           predicates:
             - Path=/data-service/**
-            - Method=GET, POST, PUT
-
-#      default-filters:
-#        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
-#      globalcors:
-#        cors-configurations:
-#          '[/**]':
-#            allowedOrigins: 'http://localhost:3000/**'
-#            allow-credentials: true
-#            allowedHeaders: '*'
-#            allowedMethods:
-#              - PUT
-#              - GET
-#              - POST
-#              - DELETE
-#              - OPTIONS
-#        add-to-simple-url-handler-mapping: true
+            - Method=GET, POST
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:3000/'
+            allow-credentials: true
+            allowedHeaders: '*'
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
+        add-to-simple-url-handler-mapping: true
 
 management:
   endpoints:
