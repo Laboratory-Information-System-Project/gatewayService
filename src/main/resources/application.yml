@@ -16,26 +16,76 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
+            - Path=/user-service/login
+            - Method=POST
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
             - Path=/user-service/**
             - Method=GET, POST
+          filters:
+            - name: TokenFilter
+
         - id: collecting-service
           uri: lb://COLLECTING-SERVICE
           predicates:
             - Path=/collecting-service/**
             - Method=GET, POST
+          filters:
+            name: TokenFilter
+
         - id: inspection-service
           uri: lb://INSPECTION-SERVICE
           predicates:
             - Path=/inspection-service/**
             - Method=GET, POST
+#          filters:
+#            - TokenFilter
+
         - id: prescribe-service
           uri: lb://PRESCRIBE-SERVICE
           predicates:
             - Path=/prescribe-service/**
             - Method=GET, POST
+#          filters:
+#            name: TokenFilter
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh, health, beans, trace, busrefresh
+        - id: data-service
+          uri: lb://DATA-SERVICE
+          predicates:
+            - Path=/data-service/**
+            - Method=GET, POST
+          filters:
+            name: TokenFilter
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+#        - TokenFilter
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:3000/'
+            allow-credentials: true
+            allowedHeaders: '*'
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
+        add-to-simple-url-handler-mapping: true
+#      fail-on-route-definition-error:
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: refresh, health, beans, trace, busrefresh
+
+token:
+#  access-expired-time: 3600000
+#  refresh-expired-time: 604800000
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+  #  refresh-token-name: refresh-token
+  access-token-name: access-token
