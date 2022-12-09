@@ -20,18 +20,33 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
+            - Path=/user-service/login
+            - Method=POST
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
             - Path=/user-service/**
-            - Method=GET, POST, PUT
+            - Method=GET, POST
+          filters:
+            - name: TokenFilter
+
         - id: collecting-service
           uri: lb://COLLECTING-SERVICE
           predicates:
             - Path=/collecting-service/**
             - Method=GET, POST, PUT
+#          filters:
+#            name: TokenFilter
+
         - id: inspection-service
           uri: lb://INSPECTION-SERVICE
           predicates:
             - Path=/inspection-service/**
             - Method=GET, POST, PUT
+#          filters:
+#            - TokenFilter
+
         - id: prescribe-service
           uri: lb://PRESCRIBE-SERVICE
           predicates:
@@ -43,7 +58,9 @@ spring:
           uri: lb://DATA-SERVICE
           predicates:
             - Path=/data-service/**
-            - Method=GET, POST, PUT
+            - Method=GET, POST
+          #          filters:
+          #            name: TokenFilter
 
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
@@ -61,8 +78,18 @@ spring:
               - OPTIONS
         add-to-simple-url-handler-mapping: true
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh, health, beans, trace, busrefresh
+
+#        - TokenFilter
+#      fail-on-route-definition-error:
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: refresh, health, beans, trace, busrefresh
+
+jwt:
+  access-expired-time: 3600000
+#  refresh-expired-time: 604800000
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+  #  refresh-token-name: refresh-token
+  access-token-name: access-token
