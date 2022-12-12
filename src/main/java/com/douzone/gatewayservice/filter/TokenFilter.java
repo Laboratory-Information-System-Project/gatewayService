@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -18,6 +19,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
 
 
 @Slf4j
@@ -54,7 +56,7 @@ public class TokenFilter extends AbstractGatewayFilterFactory<TokenFilter.Config
     }
 
     private boolean isJwtValid(String jwt) {
-//        Key secretKey = Keys.hmacShaKeyFor(getToken.getProperty("jwt.secret").getBytes(StandardCharsets.UTF_8));
+       // Key secretKey = Keys.hmacShaKeyFor(getToken.getProperty("jwt.secret").getBytes(StandardCharsets.UTF_8));
         boolean isValue = true;
         String subject = null;
         try {
@@ -64,7 +66,8 @@ public class TokenFilter extends AbstractGatewayFilterFactory<TokenFilter.Config
 //                    .parseClaimsJws(jwt)
 //                    .getBody()
 //                    .getSubject();
-            Algorithm algorithm = Algorithm.HMAC256(getToken.getProperty("jwt.secret").getBytes(StandardCharsets.UTF_8)); // 토큰 생성할 때와 같은 알고리즘으로 풀어야함.
+
+            Algorithm algorithm = Algorithm.HMAC256(getToken.getProperty("jwt.secret").getBytes()); // 토큰 생성할 때와 같은 알고리즘으로 풀어야함.
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT decodedJWT = verifier.verify(jwt);
             subject = decodedJWT.getSubject();

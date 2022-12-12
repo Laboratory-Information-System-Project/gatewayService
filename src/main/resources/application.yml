@@ -44,8 +44,8 @@ spring:
           predicates:
             - Path=/inspection-service/**
             - Method=GET, POST, PUT
-#          filters:
-#            - TokenFilter
+          filters:
+            - TokenFilter
 
         - id: prescribe-service
           uri: lb://PRESCRIBE-SERVICE
