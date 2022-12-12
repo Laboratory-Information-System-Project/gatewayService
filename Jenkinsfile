@@ -94,9 +94,9 @@ pipeline {
 
                         sshagent (credentials: ['jenkins-server-privatekey']) {
 //                              sh "eval ${ssh-agent -s}"
-                             sh "ssh -o StrictHostKeyChecking=no ubuntu@175.41.222.118 'sudo docker pull suk97/lis-dataservice'"
-                             sh "ssh -o StrictHostKeyChecking=no ubuntu@175.41.222.118 'sudo docker rm -f lis-dataservice'"
-                             sh "ssh -o StrictHostKeyChecking=no ubuntu@175.41.222.118 'sudo docker run -d --name dataservice -p 8080:8080 suk97/lis-dataservice'"
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@175.41.222.118 'sudo docker pull suk97/lis-gateway'"
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@175.41.222.118 'sudo docker rm -f lis-gateway'"
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@175.41.222.118 'sudo docker run -d --name gateway -p 8080:8080 suk97/lis-gateway'"
                         }
 
                     }
